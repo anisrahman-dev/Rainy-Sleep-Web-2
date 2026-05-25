@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Rainy Mood Style Sheet - Custom Utilities & Animations
+   ========================================================================== */
+
+/* Theme Colors Variable Mapping */
+:root {
+  --accent-color: #bec6e0;
+  --accent-glow: rgba(255, 255, 255, 0.2);
+  --accent-light: #ffffff;
+  --visualizer-color: rgba(255, 255, 255, 0.6);
+  --bg-color-1: #0b0c10;
+}
+
+[data-theme-active="forest"] {
+  --accent-color: #2ec4b6;
+  --accent-glow: rgba(46, 196, 182, 0.3);
+  --accent-light: #2ec4b6;
+  --visualizer-color: rgba(46, 196, 182, 0.6);
+}
+
+[data-theme-active="cozy"] {
+  --accent-color: #f77f00;
+  --accent-glow: rgba(247, 127, 0, 0.3);
+  --accent-light: #fcbf49;
+  --visualizer-color: rgba(247, 127, 0, 0.6);
+}
+
+/* Base Body Modifications */
+body {
+  background-color: var(--bg-color-1);
+  transition: background-color 1s ease;
+}
+
+/* Background image scaling and filters */
+.rain-bg {
+  object-fit: cover;
+  filter: brightness(0.4) contrast(1.05);
+  transform: scale(1.1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Text glow drop shadows */
+.text-glow {
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0,0,0,0.4);
+}
+
+/* Glassmorphism panel definitions */
+.glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Custom styled inputs (Mixer ranges) */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  outline: none;
+  height: 4px;
+  transition: background 0.3s ease;
+}
+
+input[type="range"]:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Webkit browser slider thumb override */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  border: 2px solid #0d0e12;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.35);
+  background: var(--accent-light);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Active soundscape card highlight */
+.bg-white\/\[0\.02\] {
+  transition: all 0.3s ease;
+}
+.bg-white\/\[0\.02\]:hover, .mixer-card-active {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Sound mixer mode buttons active state styling */
+.mode-btn.active {
+  background-color: var(--accent-light) !important;
+  color: #0b0c10 !important;
+  font-weight: 600;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.preset-option-btn.active {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+/* Master play button animation ripples */
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.group.playing .ripple-effect {
+  animation: ripple-anim 3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+}
+
+@keyframes ripple-anim {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+    border-color: rgba(255, 255, 255, 0.0);
+  }
+}
+
+/* Large Play Symbol Filled variations on playing */
+.fill-icon {
+  font-variation-settings: 'FILL' 0;
+}
+.group.playing .fill-icon {
+  font-variation-settings: 'FILL' 1;
+  color: var(--accent-light);
+  filter: drop-shadow(0 0 12px var(--accent-glow));
+}
+
+/* Drawer overlays */
+#drawerOverlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#settingsDrawer.active {
+  transform: translateX(0);
+}
+
+/* Circular progress ring countdown anim */
+#timerProgress {
+  transition: stroke-dashoffset 0.4s ease, stroke 0.4s ease;
+  stroke: var(--accent-light);
+}
+
+.timer-preset-btn.active {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+/* Theme selector dot outline */
+.theme-btn.active {
+  border-color: #ffffff;
+}
+
+/* Full screen sleep modes overlays */
+#dimOverlay.active {
+  opacity: 0.985;
+  pointer-events: auto;
+}
+
+.breathing-glow {
+  background-color: var(--accent-light);
+  animation: breathe-slow 4s ease-in-out infinite;
+  box-shadow: 0 0 25px var(--accent-glow);
+}
+
+@keyframes breathe-slow {
+  0% { transform: scale(0.95); opacity: 0.15; filter: blur(10px); }
+  50% { transform: scale(1.35); opacity: 0.35; filter: blur(20px); }
+  100% { transform: scale(0.95); opacity: 0.15; filter: blur(10px); }
+}
+
+/* Modals */
+.modal.hidden {
+  display: none !important;
+}
+
+/* Custom scrollbars on drawer */
+#settingsDrawer ::-webkit-scrollbar {
+  width: 5px;
+}
+#settingsDrawer ::-webkit-scrollbar-track {
+  background: transparent;
+}
+#settingsDrawer ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+#settingsDrawer ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
